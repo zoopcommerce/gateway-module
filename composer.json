@@ -1,0 +1,36 @@
+{
+    "name": "zoopcommerce/gateway-module",
+    "description": "Zend Framework 2 Module that provides authentication functionality",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "doctrine",
+        "zf2",
+        "zoop",
+        "authentication",
+        "rest"
+    ],
+    "homepage": "http://zoopcommerce.github.io/gateway-module",
+    "authors": [
+        {
+            "name": "Tim Roediger",
+            "email": "superdweebie@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "zoopcommerce/shard-module"          : "~1.0",
+        "zoopcommerce/gomi-module"           : "~1.0",
+        "zendframework/zend-authentication"  : "~2.3",
+        "zendframework/zend-http"            : "~2.3",
+        "zendframework/zend-math"            : "~2.3",
+        "zendframework/zend-mvc"             : "~2.3",
+        "zendframework/zend-servicemanager"  : "~2.3",
+        "zendframework/zend-stdlib"          : "~2.3"
+    },
+    "autoload": {
+        "psr-0": {
+            "Zoop\\GatewayModule\\": "src/"
+        }
+    }
+}
