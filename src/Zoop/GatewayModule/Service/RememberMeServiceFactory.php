@@ -21,7 +21,7 @@ class RememberMeServiceFactory implements FactoryInterface
 {
     /**
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * @param  \Zend\ServiceManager\ServiceLocatorInterface  $serviceLocator
      * @return \Zoop\GatewayModule\Adapter\RememberMeAdapter
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -31,19 +31,20 @@ class RememberMeServiceFactory implements FactoryInterface
         $optionsArray = $config['remember_me_service_options'];
         $optionsArray['document_manager'] = $config['document_manager'];
 
-        if (is_string($optionsArray['document_manager'])){
+        if (is_string($optionsArray['document_manager'])) {
             $optionsArray['document_manager'] = $serviceLocator->get($optionsArray['document_manager']);
         }
 
         $rememberMeService =  new RememberMeService($optionsArray);
         $request = $serviceLocator->get('request');
-        if ($request instanceof Request){
+        if ($request instanceof Request) {
             $rememberMeService->setRequestHeaders($request->getHeaders());
         }
         $response = $serviceLocator->get('response');
-        if ($response instanceof Response){
+        if ($response instanceof Response) {
             $rememberMeService->setResponseHeaders($response->getHeaders());
         }
+
         return $rememberMeService;
     }
 }

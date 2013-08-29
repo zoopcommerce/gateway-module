@@ -41,31 +41,38 @@ class RememberMe
      */
     protected $username;
 
-    public function getSeries() {
+    public function getSeries()
+    {
         return $this->series;
     }
 
-    public function setSeries($series) {
+    public function setSeries($series)
+    {
         $this->series = (string) $series;
     }
 
-    public function getToken() {
+    public function getToken()
+    {
         return $this->token;
     }
 
-    public function setToken($token) {
+    public function setToken($token)
+    {
         $this->token = (string) $token;
     }
 
-    public function getUsername() {
+    public function getUsername()
+    {
         return $this->username;
     }
 
-    public function setUsername($username) {
+    public function setUsername($username)
+    {
         $this->username = (string) $username;
     }
 
-    public function __construct($series, $token, $username){
+    public function __construct($series, $token, $username)
+    {
         $this->setSeries($series);
         $this->setToken($token);
         $this->setUsername($username);

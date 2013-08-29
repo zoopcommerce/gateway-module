@@ -13,12 +13,13 @@ class HttpResolver implements ResolverInterface
 
     protected $adapter;
 
-    public function __construct(AdapterInterface $adapter) {
+    public function __construct(AdapterInterface $adapter)
+    {
         $this->adapter = $adapter;
     }
 
-    public function resolve($username, $realm, $password = null){
-
+    public function resolve($username, $realm, $password = null)
+    {
         $this->adapter->setIdentity($username);
         $this->adapter->setCredential($password);
 

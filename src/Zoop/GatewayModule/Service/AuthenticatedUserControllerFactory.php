@@ -22,15 +22,19 @@ class AuthenticatedUserControllerFactory implements FactoryInterface
 
     /**
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * @param  \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
      * @return object
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
 
-        $options = new Options($serviceLocator->getServiceLocator()->get('config')['zoop']['gateway']['authenticated_user_controller_options']);
+        $options = new Options(
+            $serviceLocator->getServiceLocator()
+                ->get('config')['zoop']['gateway']['authenticated_user_controller_options']
+        );
         $options->setServiceLocator($serviceLocator->getServiceLocator());
         $instance = new AuthenticatedUserController($options);
+
         return $instance;
     }
 }

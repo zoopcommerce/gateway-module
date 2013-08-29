@@ -4,10 +4,10 @@ namespace Zoop\GatewayModule\Test\TestAsset;
 
 use Zoop\GomiModule\DataModel\User;
 
-class TestData{
-
-    public static function create($documentManager){
-
+class TestData
+{
+    public static function create($documentManager)
+    {
         //Create data in the db to query against
         $documentManager->getConnection()->selectDatabase('gatewayModuleTest');
 
@@ -24,7 +24,8 @@ class TestData{
         $documentManager->clear();
     }
 
-    public static function remove($documentManager){
+    public static function remove($documentManager)
+    {
         //Cleanup db after all tests have run
         $collections = $documentManager->getConnection()->selectDatabase('gatewayModuleTest')->listCollections();
         foreach ($collections as $collection) {

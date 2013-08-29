@@ -2,29 +2,17 @@ language: php
 
 php:
   - 5.4
+  - 5.5
 
-env:
-  - MONGO_VERSION=1.2.12
-
-services: mongodb
+matrix:
+  allow_failures:
+    - php: 5.5
 
 before_script:
-  - pecl -q install mongo-${MONGO_VERSION} && echo "extension=mongo.so" >> `php --ini | grep "Loaded Configuration" | sed -e "s|.*:\s*||"`
-  - cd ..
-  - git clone git://github.com/zendframework/ZendSkeletonApplication.git
-  - cd ZendSkeletonApplication
-  - mkdir data/DoctrineMongoODMModule
-  - mkdir data/DoctrineMongoODMModule/Hydrator
-  - rm .gitmodules
-  - git rm --cached vendor/ZF2
-  - cp ../authenticationModule/.travis/composer.json ./
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install
-  - rm -rf vendor/superdweebie/authentication-module
-  - cp -r ../authenticationModule vendor/superdweebie/
-  - mv vendor/superdweebie/authenticationModule vendor/superdweebie/authentication-module
-  - rm config/application.config.php
+  - composer install --dev
 
 script:
-  - cd vendor/superdweebie/authentication-module
-  - phpunit
+  - cd ./tests
+  - ../vendor/bin/phpunit --coverage-clover ./build/clover.xml
+  - php build/coverage-checker.php build/clover.xml 25
+  - ../vendor/bin/phpcs --standard=PSR2 ../src/ ../tests/Zoop/

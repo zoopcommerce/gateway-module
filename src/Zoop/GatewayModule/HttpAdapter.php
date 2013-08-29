@@ -22,12 +22,14 @@ class HttpAdapter extends ZendHttpAdapter
     public function authenticate()
     {
         if (empty($this->request)) {
-            throw new Exception\RuntimeException('Request and Response objects must be set before calling '
-                                                . 'authenticate()');
+            throw new Exception\RuntimeException(
+                'Request and Response objects must be set before calling authenticate()'
+            );
         }
 
         if ($this->request->getUri()->getScheme() != 'https') {
             $this->response->setStatusCode(403);
+
             return new Result(
                 Result::FAILURE_UNCATEGORIZED,
                 array(),
@@ -37,5 +39,4 @@ class HttpAdapter extends ZendHttpAdapter
 
         return parent::authenticate();
     }
-
 }

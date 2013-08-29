@@ -19,18 +19,18 @@ class AuthenticationServiceFactory implements FactoryInterface
 {
     /**
      *
-     * @param \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
+     * @param  \Zend\ServiceManager\ServiceLocatorInterface $serviceLocator
      * @return \Zend\Authentication\AuthenticationService
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $options = $serviceLocator->get('config')['zoop']['gateway']['authentication_service_options'];
 
-        if ($options['enable_per_session']){
-            if (is_string($options['per_session_storage'])){
+        if ($options['enable_per_session']) {
+            if (is_string($options['per_session_storage'])) {
                 $options['per_session_storage'] = $serviceLocator->get($options['per_session_storage']);
             }
-            if (is_string($options['per_session_adapter'])){
+            if (is_string($options['per_session_adapter'])) {
                 $options['per_session_adapter'] = $serviceLocator->get($options['per_session_adapter']);
             }
         } else {
@@ -38,20 +38,17 @@ class AuthenticationServiceFactory implements FactoryInterface
             unset($options['per_session_adapter']);
         }
 
-        if (
-            $options['enable_per_request'] &&
+        if ($options['enable_per_request'] &&
             is_string($options['per_request_adapter'])
-        ){
+        ) {
             $options['per_request_adapter'] = $serviceLocator->get($options['per_request_adapter']);
         } else {
             unset($options['per_request_adapter']);
         }
 
-
-        if (
-            $options['enable_remember_me'] &&
+        if ($options['enable_remember_me'] &&
             is_string($options['remember_me_service'])
-        ){
+        ) {
             $options['remember_me_service'] = $serviceLocator->get($options['remember_me_service']);
         } else {
             unset($options['remember_me_service']);

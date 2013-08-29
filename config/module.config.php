@@ -1,14 +1,31 @@
 <?php
-return array(
-    'zoop' => array(
-        'gateway' => array(
+return [
+    'zoop' => [
+        'gateway' => [
+            //All gateway configuration settings are inside this key
+
+            //Which document manager to use
             'document_manager' => 'doctrine.odm.documentmanager.default',
+
+            //Which shard manifest to use
             'shard_manifest'   => 'default',
 
             'authentication_service_options' => [
+
+                //If per request authentication is enabled,
+                //username and password may be sent via the
+                // http Authorization: Basic <username:password> header
                 'enable_per_request'    => false,
+
+                //If per session authentication is enabled, username and password
+                //can be posted to the /rest/authenticatedUser endpoint
+                //to create an authentication cookie
                 'enable_per_session'    => false,
+
+                //If remember me is enabled, a remember me cookie will be set
+                //so a session cookie can be recreated next time the user visits
                 'enable_remember_me'    => false,
+
                 'per_request_adapter' => 'Zoop\GatewayModule\HttpAdapter',
                 'per_session_adapter' => 'doctrine.authentication.adapter.default',
                 'per_session_storage' => 'doctrine.authentication.storage.default',
@@ -30,7 +47,7 @@ return array(
                 'username_property' => 'username',
                 'user_class' => 'Zoop\GomiModule\DataModel\User'
             ],
-        ),
+        ],
         'maggott' => [
             'exception_map' => [
                 'Zoop\GatewayModule\Exception\LoginFailedException' => [
@@ -53,67 +70,50 @@ return array(
                         'extension.rest' => [],
                         'extension.serializer' => true,
                     ],
+                    'documents' => [
+                        'Zoop\GatewayModule\DataModel' => __DIR__ . '/../src/Zoop/GatewayModule/DataModel'
+                    ]
                 ]
             ]
         ]
-    ),
+    ],
 
-    'doctrine' => array(
-        'authentication' => array(
-            'adapter' => array(
-                'default' => array(
+    'doctrine' => [
+        'authentication' => [
+            'adapter' => [
+                'default' => [
                     'identity_class' => 'Zoop\GomiModule\DataModel\User',
                     'identity_property' => 'username',
                     'credential_property' => 'password'
-                )
-            ),
-            'storage' => array(
-                'default' => array(
+                ]
+            ],
+            'storage' => [
+                'default' => [
                     'identity_class' => 'Zoop\GomiModule\DataModel\User',
-                )
-            ),
-        ),
+                ]
+            ],
+        ],
+    ],
 
-        'driver' => array(
-            'default' => array(
-                'drivers' => array(
-                    'Zoop\GatewayModule\DataModel' => 'doctrine.driver.authentication'
-                ),
-            ),
-            'authentication' => array(
-                'class' => 'Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver',
-                'paths' => array(
-                    __DIR__ . '/../src/Zoop/GatewayModule/DataModel'
-                ),
-            ),
-        ),
-    ),
-
-    'controllers' => array(
-        'factories' => array(
+    'controllers' => [
+        'factories' => [
             'rest.default.authenticateduser' => 'Zoop\GatewayModule\Service\AuthenticatedUserControllerFactory'
-        ),
-    ),
+        ],
+    ],
 
-    'view_manager' => array(
-        'strategies' => array(
-            'ViewJsonStrategy',
-        ),
-    ),
-
-    'service_manager' => array(
+    'service_manager' => [
         'invokables' => [
             'doctrine-authentication-adapter-delegator-factory' => 'Zoop\GatewayModule\Delegator\DoctrineAuthenticationAdapterDelegatorFactory'
         ],
-        'factories' => array(
+        'factories' => [
             'Zend\Authentication\AuthenticationService' => 'Zoop\GatewayModule\Service\AuthenticationServiceFactory',
             'Zoop\GatewayModule\HttpAdapter' => 'Zoop\GatewayModule\Service\HttpAdapterServiceFactory',
             'Zoop\GatewayModule\RememberMeService' => 'Zoop\GatewayModule\Service\RememberMeServiceFactory'
-        ),
+        ],
         'delegators' => [
             'doctrine.authentication.adapter.default' => [
                 'doctrine-authentication-adapter-delegator-factory'
             ]
         ]
-    )
-);
+    ]
+];

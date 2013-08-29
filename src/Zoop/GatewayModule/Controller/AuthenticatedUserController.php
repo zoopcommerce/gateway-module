@@ -34,38 +34,47 @@ class AuthenticatedUserController extends AbstractRestfulController
 
     protected $options;
 
-    public function onDispatch(MvcEvent $e) {
+    public function onDispatch(MvcEvent $e)
+    {
         $this->model = $this->acceptableViewModelSelector($this->acceptCriteria);
+
         return parent::onDispatch($e);
     }
 
-    public function getOptions() {
+    public function getOptions()
+    {
         return $this->options;
     }
 
-    public function setOptions(Options $options) {
+    public function setOptions(Options $options)
+    {
         $this->options = $options;
     }
 
-    public function __construct(Options $options = null) {
-        if (!isset($options)){
+    public function __construct(Options $options = null)
+    {
+        if (!isset($options)) {
             $options = new Options;
         }
         $this->setOptions($options);
     }
 
-    public function getList(){
-
+    public function getList()
+    {
         $authenticationService = $this->options->getAuthenticationService();
 
-        if ($authenticationService->hasIdentity()){
-            return $this->model->setVariables($this->options->getSerializer()->toArray($authenticationService->getIdentity()));
+        if ($authenticationService->hasIdentity()) {
+            return $this->model->setVariables(
+                $this->options->getSerializer()->toArray($authenticationService->getIdentity())
+            );
         }
         $this->response->setStatusCode(204);
+
         return $this->response;
     }
 
-    public function get($id){
+    public function get($id)
+    {
         return $this->getList();
     }
 
@@ -73,15 +82,15 @@ class AuthenticatedUserController extends AbstractRestfulController
      * Checks the provided username and password against the AuthenticationService and
      * returns the active user
      *
-     * @param type $data
+     * @param  type                           $data
      * @return type
      * @throws Exception\LoginFailedException
      */
-    public function create($data){
-
+    public function create($data)
+    {
         $authenticationService = $this->options->getAuthenticationService();
 
-        if($authenticationService->hasIdentity()){
+        if ($authenticationService->hasIdentity()) {
             $authenticationService->logout();
         }
 
@@ -90,13 +99,15 @@ class AuthenticatedUserController extends AbstractRestfulController
             $data[$this->options->getDataPasswordKey()],
             isset($data[$this->options->getDataRememberMeKey()]) ? $data[$this->options->getDataRememberMeKey()]: false
         );
-        if (!$result->isValid()){
+        if (!$result->isValid()) {
             throw new Exception\LoginFailedException(implode('. ', $result->getMessages()));
         }
 
-        $this->response->getHeaders()->addHeader(Location::fromString(
-            'Location: ' . $this->request->getUri()->getPath()
-        ));
+        $this->response->getHeaders()->addHeader(
+            Location::fromString(
+                'Location: ' . $this->request->getUri()->getPath()
+            )
+        );
 
         return $this->model->setVariables($this->options->getSerializer()->toArray($result->getIdentity()));
     }
@@ -105,7 +116,8 @@ class AuthenticatedUserController extends AbstractRestfulController
      * Clears the active user
      * @param type $id
      */
-    public function delete($id){
+    public function delete($id)
+    {
         $this->deleteList();
     }
 
@@ -113,10 +125,12 @@ class AuthenticatedUserController extends AbstractRestfulController
     {
         $this->options->getAuthenticationService()->logout();
         $this->response->setStatusCode(204);
+
         return $this->response;
     }
 
-    public function update($id, $data) {
+    public function update($id, $data)
+    {
         return $this->model->setVariables([]);
     }
 }

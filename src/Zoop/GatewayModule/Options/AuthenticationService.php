@@ -33,59 +33,73 @@ class AuthenticationService extends AbstractOptions
 
     protected $rememberMeService;
 
-    public function getEnablePerRequest() {
+    public function getEnablePerRequest()
+    {
         return $this->enablePerRequest;
     }
 
-    public function setEnablePerRequest($enablePerRequest) {
+    public function setEnablePerRequest($enablePerRequest)
+    {
         $this->enablePerRequest = (Boolean) $enablePerRequest;
     }
 
-    public function getEnablePerSession() {
+    public function getEnablePerSession()
+    {
         return $this->enablePerSession;
     }
 
-    public function setEnablePerSession($enablePerSession) {
+    public function setEnablePerSession($enablePerSession)
+    {
         $this->enablePerSession = (Boolean) $enablePerSession;
     }
 
-    public function getEnableRememberMe() {
+    public function getEnableRememberMe()
+    {
         return $this->enableRememberMe;
     }
 
-    public function setEnableRememberMe($enableRememberMe) {
+    public function setEnableRememberMe($enableRememberMe)
+    {
         $this->enableRememberMe = (Boolean) $enableRememberMe;
     }
 
-    public function getPerRequestAdapter() {
+    public function getPerRequestAdapter()
+    {
         return $this->perRequestAdapter;
     }
 
-    public function setPerRequestAdapter(AdapterInterface $perRequestAdapter) {
+    public function setPerRequestAdapter(AdapterInterface $perRequestAdapter)
+    {
         $this->perRequestAdapter = $perRequestAdapter;
     }
 
-    public function getPerSessionStorage() {
+    public function getPerSessionStorage()
+    {
         return $this->perSessionStorage;
     }
 
-    public function setPerSessionStorage(StorageInterface $perSessionStorage) {
+    public function setPerSessionStorage(StorageInterface $perSessionStorage)
+    {
         $this->perSessionStorage = $perSessionStorage;
     }
 
-    public function getPerSessionAdapter() {
+    public function getPerSessionAdapter()
+    {
         return $this->perSessionAdapter;
     }
 
-    public function setPerSessionAdapter(AdapterInterface $perSessionAdapter) {
+    public function setPerSessionAdapter(AdapterInterface $perSessionAdapter)
+    {
         $this->perSessionAdapter = $perSessionAdapter;
     }
 
-    public function getRememberMeService() {
+    public function getRememberMeService()
+    {
         return $this->rememberMeService;
     }
 
-    public function setRememberMeService(RememberMeInterface $rememberMeService) {
+    public function setRememberMeService(RememberMeInterface $rememberMeService)
+    {
         $this->rememberMeService = $rememberMeService;
     }
 }

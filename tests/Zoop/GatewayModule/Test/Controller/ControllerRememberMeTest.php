@@ -9,20 +9,22 @@ use Zend\Http\Header\ContentType;
 use Zend\Http\Request;
 use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
-class ControllerRememberMeTest extends AbstractHttpControllerTestCase{
-
+class ControllerRememberMeTest extends AbstractHttpControllerTestCase
+{
     protected static $staticDcumentManager;
 
     protected static $dbDataCreated = false;
 
-    public static function tearDownAfterClass(){
+    public static function tearDownAfterClass()
+    {
         TestData::remove(static::$staticDcumentManager);
     }
 
-    public function setUp(){
-
+    public function setUp()
+    {
         $appConfig = include __DIR__ . '/../../../../test.application.config.php';
-        $appConfig['module_listener_options']['config_glob_paths'][] = __DIR__ . '/../../../../test.module.rememberme.config.php';
+        $appConfig['module_listener_options']['config_glob_paths'][] =
+            __DIR__ . '/../../../../test.module.rememberme.config.php';
         $this->setApplicationConfig($appConfig);
 
         parent::setUp();
@@ -30,7 +32,7 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase{
         $this->documentManager = $this->getApplicationServiceLocator()->get('doctrine.odm.documentmanager.default');
         static::$staticDcumentManager = $this->documentManager;
 
-        if ( ! static::$dbDataCreated){
+        if (! static::$dbDataCreated) {
             //Create data in the db to query against
             TestData::create($this->documentManager);
             static::$dbDataCreated = true;
@@ -40,8 +42,8 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase{
         $this->getApplicationServiceLocator()->get('Zend\Authentication\AuthenticationService')->logout();
     }
 
-    public function testLoginSuccessWithRememberMe(){
-
+    public function testLoginSuccessWithRememberMe()
+    {
         //Do the login
         $accept = new Accept;
         $accept->addMediaType('application/json');
@@ -69,15 +71,17 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase{
         $this->assertEquals('McQueen', $result['lastname']);
     }
 
-    public function testGetUserWithRememberMe(){
-
-        $authenticationService = $this->getApplicationServiceLocator()->get('Zend\Authentication\AuthenticationService');
+    public function testGetUserWithRememberMe()
+    {
+        $authenticationService = $this->getApplicationServiceLocator()
+            ->get('Zend\Authentication\AuthenticationService');
 
         //do inital login
         $authenticationService->login('toby', 'password', true);
 
         //get the remember me object
-        $rememberMeObject = $this->documentManager->getRepository('Zoop\GatewayModule\DataModel\RememberMe')->findOneBy(['username' => 'toby']);
+        $rememberMeObject = $this->documentManager
+            ->getRepository('Zoop\GatewayModule\DataModel\RememberMe')->findOneBy(['username' => 'toby']);
 
         //clear the authentication storage
         $authenticationService->getOptions()->getPerSessionStorage()->clear();
@@ -117,15 +121,17 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase{
         $this->assertEquals('toby', $newUsername);
     }
 
-    public function testReloginWithRememberMeToken(){
-
-        $authenticationService = $this->getApplicationServiceLocator()->get('Zend\Authentication\AuthenticationService');
+    public function testReloginWithRememberMeToken()
+    {
+        $authenticationService = $this->getApplicationServiceLocator()
+           ->get('Zend\Authentication\AuthenticationService');
 
         //do inital login
         $authenticationService->login('toby', 'password', true);
 
         //get the remember me object
-        $rememberMeObject = $this->documentManager->getRepository('Zoop\GatewayModule\DataModel\RememberMe')->findOneBy(['username' => 'toby']);
+        $rememberMeObject = $this->documentManager
+            ->getRepository('Zoop\GatewayModule\DataModel\RememberMe')->findOneBy(['username' => 'toby']);
 
         //clear the authentication storage
         $authenticationService->getOptions()->getPerSessionStorage()->clear();
@@ -145,7 +151,9 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase{
         $this->getRequest()
             ->setMethod(Request::METHOD_POST)
             ->setContent('{"username": "toby", "password": "password", "rememberMe": true}')
-            ->getHeaders()->addHeaders([$accept, $requestCookie, ContentType::fromString('Content-type: application/json')]);
+            ->getHeaders()->addHeaders(
+                [$accept, $requestCookie, ContentType::fromString('Content-type: application/json')]
+            );
 
         $this->dispatch('/rest/authenticated-user');
 
@@ -166,8 +174,8 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase{
         $this->assertEquals('toby', $newUsername);
     }
 
-    public function testGetUserWithNoRememberMeToken(){
-
+    public function testGetUserWithNoRememberMeToken()
+    {
         $accept = new Accept;
         $accept->addMediaType('application/json');
 
@@ -188,15 +196,17 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase{
         $this->assertEquals('', $responseCookie->getValue());
     }
 
-    public function testSessionTheftWithRememberMe(){
-
-        $authenticationService = $this->getApplicationServiceLocator()->get('Zend\Authentication\AuthenticationService');
+    public function testSessionTheftWithRememberMe()
+    {
+        $authenticationService = $this->getApplicationServiceLocator()
+            ->get('Zend\Authentication\AuthenticationService');
 
         //do inital login
         $authenticationService->login('toby', 'password', true);
 
         //get the remember me object
-        $rememberMeObject = $this->documentManager->getRepository('Zoop\GatewayModule\DataModel\RememberMe')->findOneBy(['username' => 'toby']);
+        $rememberMeObject = $this->documentManager
+            ->getRepository('Zoop\GatewayModule\DataModel\RememberMe')->findOneBy(['username' => 'toby']);
 
         //clear the authentication storage
         $authenticationService->getOptions()->getPerSessionStorage()->clear();
@@ -230,4 +240,3 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase{
         $this->assertEquals('', $responseCookie->getValue());
     }
 }
-

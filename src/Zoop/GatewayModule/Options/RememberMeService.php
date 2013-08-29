@@ -28,51 +28,63 @@ class RememberMeService extends AbstractOptions
 
     protected $documentManager;
 
-    public function getCookieName() {
+    public function getCookieName()
+    {
         return $this->cookieName;
     }
 
-    public function setCookieName($cookieName) {
+    public function setCookieName($cookieName)
+    {
         $this->cookieName = (string) $cookieName;
     }
 
-    public function getCookieExpire() {
+    public function getCookieExpire()
+    {
         return $this->cookieExpire;
     }
 
-    public function setCookieExpire($cookieExpire) {
+    public function setCookieExpire($cookieExpire)
+    {
         $this->cookieExpire = (integer) $cookieExpire;
     }
 
-    public function getSecureCookie() {
+    public function getSecureCookie()
+    {
         return $this->secureCookie;
     }
 
-    public function setSecureCookie($secureCookie) {
+    public function setSecureCookie($secureCookie)
+    {
         $this->secureCookie = (boolean) $secureCookie;
     }
 
-    public function getUsernameProperty() {
+    public function getUsernameProperty()
+    {
         return $this->usernameProperty;
     }
 
-    public function setUsernameProperty($usernameProperty) {
+    public function setUsernameProperty($usernameProperty)
+    {
         $this->usernameProperty = (string) $usernameProperty;
     }
 
-    public function getUserClass() {
+    public function getUserClass()
+    {
         return $this->userClass;
     }
 
-    public function setUserClass($userClass) {
+    public function setUserClass($userClass)
+    {
         $this->userClass = (string) $userClass;
     }
 
-    public function getDocumentManager() {
+    public function getDocumentManager()
+    {
         return $this->documentManager;
     }
 
-    public function setDocumentManager($documentManager) {
+    public function setDocumentManager($documentManager)
+    {
         $this->documentManager = $documentManager;
     }
 }
