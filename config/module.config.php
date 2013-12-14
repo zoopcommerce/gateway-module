@@ -67,7 +67,6 @@ return [
                 'default' => [
                     'model_manager' => 'doctrine.odm.documentmanager.default',
                     'extension_configs' => [
-                        'extension.rest' => [],
                         'extension.serializer' => true,
                     ],
                     'models' => [
