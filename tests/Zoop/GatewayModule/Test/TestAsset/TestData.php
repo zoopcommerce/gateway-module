@@ -6,30 +6,26 @@ use Zoop\GomiModule\DataModel\User;
 
 class TestData
 {
-    public static function create($documentManager)
+    public static function create($serviceLocator, $documentManager)
     {
-        //Create data in the db to query against
-        $documentManager->getConnection()->selectDatabase('gatewayModuleTest');
-
+        //craete temp auth user
+        $sysUser = new User;
+        $sysUser->addRole('admin');
+        $serviceLocator->setService('user', $sysUser);
+        
         $user = new User;
         $user->setUsername('toby');
         $user->setFirstName('Toby');
         $user->setLastName('McQueen');
         $user->setEmail('toby@here.com');
-        $user->setPassword('password');
+        $user->setPassword('password1');
+        $user->setSalt('passwordpasswordpasswordpasswordpassword');
 
         $documentManager->persist($user);
 
         $documentManager->flush();
+        
+        $sysUser->removeRole('admin');
         $documentManager->clear();
-    }
-
-    public static function remove($documentManager)
-    {
-        //Cleanup db after all tests have run
-        $collections = $documentManager->getConnection()->selectDatabase('gatewayModuleTest')->listCollections();
-        foreach ($collections as $collection) {
-            $collection->remove(array(), array('safe' => true));
-        }
     }
 }

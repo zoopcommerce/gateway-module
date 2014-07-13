@@ -20,7 +20,6 @@ use Zend\Mvc\MvcEvent;
  */
 class AuthenticatedUserController extends AbstractRestfulController
 {
-
     protected $model;
 
     protected $acceptCriteria = array(

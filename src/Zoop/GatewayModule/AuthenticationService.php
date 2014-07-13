@@ -15,7 +15,6 @@ use Zend\Authentication\Storage\NonPersistent;
  */
 class AuthenticationService extends ZendAuthenticationService
 {
-
     protected $options;
 
     public function getOptions()
