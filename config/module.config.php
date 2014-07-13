@@ -65,12 +65,11 @@ return [
         'shard' => [
             'manifest' => [
                 'default' => [
-                    'document_manager' => 'doctrine.odm.documentmanager.default',
+                    'model_manager' => 'doctrine.odm.documentmanager.default',
                     'extension_configs' => [
-                        'extension.rest' => [],
                         'extension.serializer' => true,
                     ],
-                    'documents' => [
+                    'models' => [
                         'Zoop\GatewayModule\DataModel' => __DIR__ . '/../src/Zoop/GatewayModule/DataModel'
                     ]
                 ]

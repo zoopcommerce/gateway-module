@@ -21,13 +21,12 @@ class RememberMeServiceFactory implements FactoryInterface
 {
     /**
      *
-     * @param  \Zend\ServiceManager\ServiceLocatorInterface  $serviceLocator
-     * @return \Zoop\GatewayModule\Adapter\RememberMeAdapter
+     * @param ServiceLocatorInterface  $serviceLocator
+     * @return RememberMeAdapter
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-
-        $config = $serviceLocator->get('Config')['zoop']['gateway'];
+        $config = $serviceLocator->get('config')['zoop']['gateway'];
         $optionsArray = $config['remember_me_service_options'];
         $optionsArray['document_manager'] = $config['document_manager'];
 
