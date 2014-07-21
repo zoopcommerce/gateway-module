@@ -6,7 +6,7 @@
 namespace Zoop\GatewayModule;
 
 use Zoop\GatewayModule\DataModel\RememberMe;
-use Zoop\GatewayModule\Options\RememberMeService as RememberMeServiceOptions;
+use Zoop\GatewayModule\Options\RememberMeServiceOptions;
 use Zend\Http\Headers;
 use Zend\Http\Header\SetCookie;
 use Zend\Math\Rand;

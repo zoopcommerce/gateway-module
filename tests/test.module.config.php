@@ -11,7 +11,7 @@ return [
         'odm' => [
             'configuration' => [
                 'default' => [
-                    'default_db' => 'gatewayModuleTest',
+                    'default_db' => 'gateway-module-test',
                     'proxy_dir'    => __DIR__ . '/Proxy',
                     'hydrator_dir' => __DIR__ . '/Hydrator',
                 ]

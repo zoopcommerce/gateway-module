@@ -16,20 +16,36 @@
         {
             "name": "Tim Roediger",
             "email": "superdweebie@gmail.com"
+        },
+        {
+            "name": "Josh Stuart",
+            "email": "josh.stuart@zoopcommerce.com"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/zoopcommerce/mongodb-odm"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/crimsonronin/gomi-module"
         }
     ],
     "require": {
         "php": ">=5.4",
-        "zoopcommerce/gomi-module"           : "~1.0",
-        "doctrine/doctrine-mongo-odm-module" : "1.0.x-dev",
-        "doctrine/doctrine-module"           : "1.0.x-dev as 1.0",
-        "doctrine/common"                    : "2.4.x-dev as 2.4",
-        "doctrine/mongodb-odm"               : "dev-master#3515b2cfb4779a804fbabef2dd3f0a1c12baa994 as 1.0.0-BETA9",
-        "zendframework/zendframework"        : "2.3.x-dev"
+        "zendframework/zendframework"               : "2.3.1",
+        "doctrine/annotations"                      : "dev-master#a11349d39d85bef75a71bd69bd604ac4fb993f03 as dev-master",
+        "doctrine/doctrine-mongo-odm-module"        : "1.0.x-dev",
+        "doctrine/doctrine-module"                  : "1.0.x-dev as 1.0",
+        "doctrine/mongodb-odm"                      : "dev-hotfix719 as 1.0.0-BETA9",
+        "zoopcommerce/gomi-module"                  : "~2.0"
     },
     "require-dev": {
-        "phpunit/phpunit": ">=3.7",
-        "squizlabs/php_codesniffer": "1.4.*"
+        "phpunit/phpunit"           : ">=3.7",
+        "squizlabs/php_codesniffer" : "1.4.*",
+        "pdepend/pdepend"           : "1.1.1",
+        "phpmd/phpmd"               : "1.5.*"
     },
     "autoload": {
         "psr-0": {

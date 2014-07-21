@@ -16,7 +16,7 @@ use Zend\Stdlib\AbstractOptions;
  * @version $Revision$
  * @author  Tim Roediger <superdweebie@gmail.com>
  */
-class AuthenticationService extends AbstractOptions
+class AuthenticationServiceOptions extends AbstractOptions
 {
 
     protected $enablePerRequest = false;

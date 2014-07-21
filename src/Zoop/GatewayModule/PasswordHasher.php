@@ -55,12 +55,13 @@ class PasswordHasher
         $documentManager = $this->serviceLocator->get($config['document_manager']);
         $metadata = $documentManager->getClassMetadata($this->userClass);
 
-        $hashServiceName = $metadata->crypt['hash'][$this->passwordField]['service'];
-        $hashService = $this->serviceLocator->get('shard.' . $config['shard_manifest'] . '.' . $hashServiceName);
+        $hashConfig = $metadata->getCrypt()['hash'][$this->passwordField];
 
-        if (isset($metadata->crypt['hash'][$this->passwordField]['salt'])) {
+        $hashService = $this->serviceLocator->get('shard.' . $config['shard_manifest'] . '.' . $hashConfig['service']);
+
+        if (isset($hashConfig['salt'])) {
             $salt = $this->serviceLocator->get(
-                'shard.' . $config['shard_manifest'] . '.' . $metadata->crypt['hash'][$this->passwordField]['salt']
+                'shard.' . $config['shard_manifest'] . '.' . $hashConfig['salt']
             )
             ->getSalt();
         } elseif ($user instanceof SaltInterface) {

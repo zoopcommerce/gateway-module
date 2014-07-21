@@ -11,15 +11,17 @@ use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
 class ControllerRememberMeTest extends AbstractHttpControllerTestCase
 {
-    protected static $staticDcumentManager;
+    protected static $staticDocumentManager;
 
     protected static $dbDataCreated = false;
 
     public static function tearDownAfterClass()
     {
-        TestData::remove(static::$staticDcumentManager);
+        if (isset(static::$staticDocumentManager)) {
+            TestData::remove(static::$staticDocumentManager);
+        }
     }
-
+    
     public function setUp()
     {
         $appConfig = include __DIR__ . '/../../../../test.application.config.php';
@@ -29,15 +31,16 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase
 
         parent::setUp();
 
-        $this->documentManager = $this->getApplicationServiceLocator()->get('doctrine.odm.documentmanager.default');
-        static::$staticDcumentManager = $this->documentManager;
+        $serviceLocator = $this->getApplicationServiceLocator()->get('shard.default.servicemanager');
+        $this->documentManager = $serviceLocator->get('modelmanager');
+        static::$staticDocumentManager = $this->documentManager;
 
         if (! static::$dbDataCreated) {
             //Create data in the db to query against
-            TestData::create($this->documentManager);
+            TestData::create($serviceLocator, $this->documentManager);
             static::$dbDataCreated = true;
         }
-
+        
         //ensure that all tests start in a logged out state
         $this->getApplicationServiceLocator()->get('Zend\Authentication\AuthenticationService')->logout();
     }
@@ -50,7 +53,7 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase
 
         $this->getRequest()
             ->setMethod(Request::METHOD_POST)
-            ->setContent('{"username": "toby", "password": "password", "rememberMe": true}')
+            ->setContent('{"username": "toby", "password": "password1", "rememberMe": true}')
             ->getHeaders()->addHeaders([$accept, ContentType::fromString('Content-type: application/json')]);
 
         $this->dispatch('/rest/authenticatedUser');
@@ -77,7 +80,7 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase
             ->get('Zend\Authentication\AuthenticationService');
 
         //do inital login
-        $authenticationService->login('toby', 'password', true);
+        $authenticationService->login('toby', 'password1', true);
 
         //get the remember me object
         $rememberMeObject = $this->documentManager
@@ -127,7 +130,7 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase
            ->get('Zend\Authentication\AuthenticationService');
 
         //do inital login
-        $authenticationService->login('toby', 'password', true);
+        $authenticationService->login('toby', 'password1', true);
 
         //get the remember me object
         $rememberMeObject = $this->documentManager
@@ -150,7 +153,7 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase
 
         $this->getRequest()
             ->setMethod(Request::METHOD_POST)
-            ->setContent('{"username": "toby", "password": "password", "rememberMe": true}')
+            ->setContent('{"username": "toby", "password": "password1", "rememberMe": true}')
             ->getHeaders()->addHeaders(
                 [$accept, $requestCookie, ContentType::fromString('Content-type: application/json')]
             );
@@ -202,7 +205,7 @@ class ControllerRememberMeTest extends AbstractHttpControllerTestCase
             ->get('Zend\Authentication\AuthenticationService');
 
         //do inital login
-        $authenticationService->login('toby', 'password', true);
+        $authenticationService->login('toby', 'password1', true);
 
         //get the remember me object
         $rememberMeObject = $this->documentManager

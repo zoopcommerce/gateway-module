@@ -6,7 +6,7 @@
 namespace Zoop\GatewayModule\Controller;
 
 use Zoop\GatewayModule\Exception;
-use Zoop\GatewayModule\Options\AuthenticatedUserController as Options;
+use Zoop\GatewayModule\Options\AuthenticatedUserControllerOptions as Options;
 use Zend\Http\Header\Location;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\Mvc\MvcEvent;
@@ -20,7 +20,6 @@ use Zend\Mvc\MvcEvent;
  */
 class AuthenticatedUserController extends AbstractRestfulController
 {
-
     protected $model;
 
     protected $acceptCriteria = array(
@@ -34,11 +33,11 @@ class AuthenticatedUserController extends AbstractRestfulController
 
     protected $options;
 
-    public function onDispatch(MvcEvent $e)
+    public function onDispatch(MvcEvent $event)
     {
         $this->model = $this->acceptableViewModelSelector($this->acceptCriteria);
 
-        return parent::onDispatch($e);
+        return parent::onDispatch($event);
     }
 
     public function getOptions()
@@ -61,11 +60,11 @@ class AuthenticatedUserController extends AbstractRestfulController
 
     public function getList()
     {
-        $authenticationService = $this->options->getAuthenticationService();
+        $authService = $this->options->getAuthenticationService();
 
-        if ($authenticationService->hasIdentity()) {
+        if ($authService->hasIdentity()) {
             return $this->model->setVariables(
-                $this->options->getSerializer()->toArray($authenticationService->getIdentity())
+                $this->options->getSerializer()->toArray($authService->getIdentity())
             );
         }
         $this->response->setStatusCode(204);
@@ -73,6 +72,9 @@ class AuthenticatedUserController extends AbstractRestfulController
         return $this->response;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function get($id)
     {
         return $this->getList();
@@ -88,13 +90,13 @@ class AuthenticatedUserController extends AbstractRestfulController
      */
     public function create($data)
     {
-        $authenticationService = $this->options->getAuthenticationService();
+        $authService = $this->options->getAuthenticationService();
 
-        if ($authenticationService->hasIdentity()) {
-            $authenticationService->logout();
+        if ($authService->hasIdentity()) {
+            $authService->logout();
         }
 
-        $result = $authenticationService->login(
+        $result = $authService->login(
             $data[$this->options->getDataUsernameKey()],
             $data[$this->options->getDataPasswordKey()],
             isset($data[$this->options->getDataRememberMeKey()]) ? $data[$this->options->getDataRememberMeKey()]: false
@@ -115,6 +117,8 @@ class AuthenticatedUserController extends AbstractRestfulController
     /**
      * Clears the active user
      * @param type $id
+     *
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function delete($id)
     {
@@ -129,6 +133,9 @@ class AuthenticatedUserController extends AbstractRestfulController
         return $this->response;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function update($id, $data)
     {
         return $this->model->setVariables([]);

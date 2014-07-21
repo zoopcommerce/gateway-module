@@ -18,6 +18,9 @@ class HttpResolver implements ResolverInterface
         $this->adapter = $adapter;
     }
 
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function resolve($username, $realm, $password = null)
     {
         $this->adapter->setIdentity($username);

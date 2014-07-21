@@ -10,13 +10,15 @@ use Zend\Test\PHPUnit\Controller\AbstractHttpControllerTestCase;
 
 class ControllerTest extends AbstractHttpControllerTestCase
 {
-    protected static $staticDcumentManager;
+    protected static $staticDocumentManager;
 
     protected static $dbDataCreated = false;
 
     public static function tearDownAfterClass()
     {
-        TestData::remove(static::$staticDcumentManager);
+        if (isset(static::$staticDocumentManager)) {
+            TestData::remove(static::$staticDocumentManager);
+        }
     }
 
     public function setUp()
@@ -27,12 +29,13 @@ class ControllerTest extends AbstractHttpControllerTestCase
 
         parent::setUp();
 
-        $this->documentManager = $this->getApplicationServiceLocator()->get('doctrine.odm.documentmanager.default');
-        static::$staticDcumentManager = $this->documentManager;
+        $serviceLocator = $this->getApplicationServiceLocator()->get('shard.default.servicemanager');
+        $this->documentManager = $serviceLocator->get('modelmanager');
+        static::$staticDocumentManager = $this->documentManager;
 
         if (! static::$dbDataCreated) {
             //Create data in the db to query against
-            TestData::create($this->documentManager);
+            TestData::create($serviceLocator, $this->documentManager);
             static::$dbDataCreated = true;
         }
 
@@ -108,7 +111,7 @@ class ControllerTest extends AbstractHttpControllerTestCase
 
         $this->getRequest()
             ->setMethod(Request::METHOD_POST)
-            ->setContent('{"username": "toby", "password": "password"}')
+            ->setContent('{"username": "toby", "password": "password1"}')
             ->getHeaders()->addHeaders([$accept, ContentType::fromString('Content-type: application/json')]);
 
         $this->dispatch('/rest/authenticated-user');
@@ -128,14 +131,14 @@ class ControllerTest extends AbstractHttpControllerTestCase
     public function testLoginSuccessWithAuthenticatedUser()
     {
         $this->getApplicationServiceLocator()
-            ->get('Zend\Authentication\AuthenticationService')->login('toby', 'password');
+            ->get('Zend\Authentication\AuthenticationService')->login('toby', 'password1');
 
         $accept = new Accept;
         $accept->addMediaType('application/json');
 
         $this->getRequest()
             ->setMethod(Request::METHOD_POST)
-            ->setContent('{"username": "toby", "password": "password"}')
+            ->setContent('{"username": "toby", "password": "password1"}')
             ->getHeaders()->addHeaders([$accept, ContentType::fromString('Content-type: application/json')]);
 
         $this->dispatch('/rest/authenticated-user');
@@ -155,7 +158,7 @@ class ControllerTest extends AbstractHttpControllerTestCase
     public function testLoginFailWithAuthenticatedUser()
     {
         $this->getApplicationServiceLocator()
-            ->get('Zend\Authentication\AuthenticationService')->login('toby', 'password');
+            ->get('Zend\Authentication\AuthenticationService')->login('toby', 'password1');
 
         $accept = new Accept;
         $accept->addMediaType('application/json');
@@ -182,7 +185,7 @@ class ControllerTest extends AbstractHttpControllerTestCase
     public function testGetWithAuthenticatedUser()
     {
         $this->getApplicationServiceLocator()
-            ->get('Zend\Authentication\AuthenticationService')->login('toby', 'password');
+            ->get('Zend\Authentication\AuthenticationService')->login('toby', 'password1');
 
         $accept = new Accept;
         $accept->addMediaType('application/json');
