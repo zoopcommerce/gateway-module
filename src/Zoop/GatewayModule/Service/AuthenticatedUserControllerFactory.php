@@ -7,7 +7,7 @@
 namespace Zoop\GatewayModule\Service;
 
 use Zoop\GatewayModule\Controller\AuthenticatedUserController;
-use Zoop\GatewayModule\Options\AuthenticatedUserController as Options;
+use Zoop\GatewayModule\Options\AuthenticatedUserControllerOptions as Options;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

@@ -5,7 +5,7 @@
  */
 namespace Zoop\GatewayModule;
 
-use Zoop\GatewayModule\Options\AuthenticationService as AuthenticationServiceOptions;
+use Zoop\GatewayModule\Options\AuthenticationServiceOptions;
 use Zoop\GatewayModule\Exception;
 use Zend\Authentication\AuthenticationService as ZendAuthenticationService;
 use Zend\Authentication\Storage\NonPersistent;
@@ -127,16 +127,5 @@ class AuthenticationService extends ZendAuthenticationService
         }
 
         return $this->storage->read();
-    }
-
-    /**
-     *
-     * @return null | mixed
-     */
-    public function getIdentityKey()
-    {
-        if (method_exists($this->options->getStatefulStorage(), 'readKeyOnly')) {
-            return $this->options->getStatefulStorage()->readKeyOnly();
-        }
     }
 }

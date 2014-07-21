@@ -13,7 +13,7 @@ use Zend\Stdlib\AbstractOptions;
  * @version $Revision$
  * @author  Tim Roediger <superdweebie@gmail.com>
  */
-class RememberMeService extends AbstractOptions
+class RememberMeServiceOptions extends AbstractOptions
 {
 
     protected $cookieName;

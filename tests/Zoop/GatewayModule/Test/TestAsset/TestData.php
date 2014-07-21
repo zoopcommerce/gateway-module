@@ -6,6 +6,8 @@ use Zoop\GomiModule\DataModel\User;
 
 class TestData
 {
+    const DB = 'gateway-module-test';
+
     public static function create($serviceLocator, $documentManager)
     {
         //craete temp auth user
@@ -27,5 +29,18 @@ class TestData
         
         $sysUser->removeRole('admin');
         $documentManager->clear();
+    }
+
+    public static function remove($documentManager)
+    {
+        $collections = $documentManager
+            ->getConnection()
+            ->selectDatabase(self::DB)->listCollections();
+
+        foreach ($collections as $collection) {
+            /* @var $collection \MongoCollection */
+            $collection->remove(array(), array('w' => true));
+            $collection->drop();
+        }
     }
 }

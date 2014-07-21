@@ -11,7 +11,7 @@ class TestController extends AbstractActionController
         if ($this->identity()) {
             $this->response->setContent('true');
         } else {
-            $this->response->setContent('false');
+            $this->response->setStatusCode(403);
         }
 
         return $this->response;

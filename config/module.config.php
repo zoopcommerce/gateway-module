@@ -33,7 +33,6 @@ return [
             ],
 
             'authenticated_user_controller_options' => [
-                'serializer' => 'shard.default.serializer',
                 'authentication_service' => 'Zend\Authentication\AuthenticationService',
                 'data_username_key' => 'username',
                 'data_password_key' => 'password',
@@ -66,7 +65,7 @@ return [
             'manifest' => [
                 'default' => [
                     'model_manager' => 'doctrine.odm.documentmanager.default',
-                    'extension_configs' => [
+                    'extension_configs' => [                       
                         'extension.serializer' => true,
                     ],
                     'models' => [
@@ -96,7 +95,7 @@ return [
 
     'controllers' => [
         'factories' => [
-            'rest.default.authenticateduser' => 'Zoop\GatewayModule\Service\AuthenticatedUserControllerFactory'
+            'shard.rest.authenticateduser' => 'Zoop\GatewayModule\Service\AuthenticatedUserControllerFactory'
         ],
     ],
 

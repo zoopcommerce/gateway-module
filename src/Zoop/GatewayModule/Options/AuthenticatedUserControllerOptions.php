@@ -14,7 +14,7 @@ use Zend\Stdlib\AbstractOptions;
  * @version $Revision$
  * @author  Tim Roediger <superdweebie@gmail.com>
  */
-class AuthenticatedUserController extends AbstractOptions
+class AuthenticatedUserControllerOptions extends AbstractOptions
 {
 
     protected $serviceLocator;
@@ -23,7 +23,7 @@ class AuthenticatedUserController extends AbstractOptions
      *
      * @var string | \Zend\Authentication\AuthenticationService
      */
-    protected $authenticationService;
+    protected $authService;
 
     /**
      *
@@ -53,19 +53,19 @@ class AuthenticatedUserController extends AbstractOptions
      */
     public function getAuthenticationService()
     {
-        if (is_string($this->authenticationService)) {
-            $this->authenticationService = $this->serviceLocator->get($this->authenticationService);
+        if (is_string($this->authService)) {
+            $this->authService = $this->serviceLocator->get($this->authService);
         }
 
-        return $this->authenticationService;
+        return $this->authService;
     }
 
     /**
      * @param string | \Zend\Authentication\AuthenticationService $authenticationService
      */
-    public function setAuthenticationService($authenticationService)
+    public function setAuthenticationService($authService)
     {
-        $this->authenticationService = $authenticationService;
+        $this->authService = $authService;
     }
 
     /**
@@ -76,6 +76,10 @@ class AuthenticatedUserController extends AbstractOptions
     {
         if (is_string($this->serializer)) {
             $this->serializer = $this->serviceLocator->get($this->serializer);
+        } elseif (!isset($this->serializer)) {
+            $this->serializer = $this->serviceLocator->get(
+                'shard.' . $this->serviceLocator->get('config')['zoop']['gateway']['shard_manifest'] . '.servicemanager'
+            )->get('serializer');
         }
 
         return $this->serializer;

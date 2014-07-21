@@ -17,12 +17,11 @@ use Zend\ServiceManager\ServiceLocatorInterface;
  */
 class DoctrineAuthenticationAdapterDelegatorFactory implements DelegatorFactoryInterface
 {
-
+    /**
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
+     */
     public function createDelegatorWithName(ServiceLocatorInterface $serviceLocator, $name, $requestedName, $callback)
     {
-
-        $config = $serviceLocator->get('config')['zoop']['gateway'];
-
         $adapter = call_user_func($callback);
 
         $adapterOptions = $adapter->getOptions();
