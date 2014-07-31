@@ -90,13 +90,13 @@ class RememberMeServiceOptions extends AbstractOptions
         $this->documentManager = $documentManager;
     }
     
-    public function getShardServiceManager() 
+    public function getShardServiceManager()
     {
         return $this->shardServiceManager;
     }
 
-    public function setShardServiceManager($shardServiceManager) 
+    public function setShardServiceManager($shardServiceManager)
     {
         $this->shardServiceManager = $shardServiceManager;
-    }    
+    }
 }
