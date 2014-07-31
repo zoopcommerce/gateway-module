@@ -31,7 +31,7 @@ class AuthenticationServiceOptions extends AbstractOptions
 
     protected $perSessionAdapter;
 
-    protected $rememberMeService; 
+    protected $rememberMeService;
     
     public function getEnablePerRequest()
     {

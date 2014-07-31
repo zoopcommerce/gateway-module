@@ -34,7 +34,8 @@ class RememberMeServiceFactory implements FactoryInterface
             $optionsArray['document_manager'] = $serviceLocator->get($optionsArray['document_manager']);
         }
 
-        $optionsArray['shard_service_manager'] = $serviceLocator->get('shard.' . $config['shard_manifest'] . '.servicemanager');
+        $optionsArray['shard_service_manager'] = 
+            $serviceLocator->get('shard.' . $config['shard_manifest'] . '.servicemanager');
 
         $rememberMeService =  new RememberMeService($optionsArray);
         $request = $serviceLocator->get('request');

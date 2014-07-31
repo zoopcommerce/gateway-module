@@ -27,7 +27,9 @@ class SysAuthenticateAdapterFactory implements FactoryInterface
         $gatewayConfig = $serviceLocator->get('config')['zoop']['gateway'];
         
         $return = new SysAuthenticateAdapter();
-        $return->setShardServiceManager($serviceLocator->get('shard.' . $gatewayConfig['shard_manifest'] . '.servicemanager'));
+        $return->setShardServiceManager(
+            $serviceLocator->get('shard.' . $gatewayConfig['shard_manifest'] . '.servicemanager')
+        );
         $return->setDoctrineAdapter($serviceLocator->get('doctrine.authentication.adapter.default'));
 
         return $return;

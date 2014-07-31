@@ -127,5 +127,5 @@ class AuthenticationService extends ZendAuthenticationService
         }
 
         return $this->storage->read();
-    }       
+    }
 }

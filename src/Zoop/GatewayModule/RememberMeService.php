@@ -107,7 +107,7 @@ class RememberMeService implements RememberMeInterface
 
         $sysUser = new User;
         $sysUser->addRole('sys::authenticate');
-        $shardServiceManager->setService('user', $sysUser);            
+        $shardServiceManager->setService('user', $sysUser);
         
         $user = $userRepository->findOneBy([$usernameProperty => $username]);
 
