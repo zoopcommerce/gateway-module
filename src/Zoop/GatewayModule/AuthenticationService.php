@@ -29,7 +29,7 @@ class AuthenticationService extends ZendAuthenticationService
         }
         $this->options = $options;
     }
-
+    
     /**
      *
      * @param  string                      $username
@@ -127,5 +127,5 @@ class AuthenticationService extends ZendAuthenticationService
         }
 
         return $this->storage->read();
-    }
+    }       
 }

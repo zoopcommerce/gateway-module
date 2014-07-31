@@ -18,7 +18,7 @@ use Zend\Stdlib\AbstractOptions;
  */
 class AuthenticationServiceOptions extends AbstractOptions
 {
-
+    
     protected $enablePerRequest = false;
 
     protected $enablePerSession = false;
@@ -31,8 +31,8 @@ class AuthenticationServiceOptions extends AbstractOptions
 
     protected $perSessionAdapter;
 
-    protected $rememberMeService;
-
+    protected $rememberMeService; 
+    
     public function getEnablePerRequest()
     {
         return $this->enablePerRequest;

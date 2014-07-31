@@ -7,13 +7,13 @@ namespace Zoop\GatewayModule;
 
 use Zoop\GatewayModule\DataModel\RememberMe;
 use Zoop\GatewayModule\Options\RememberMeServiceOptions;
+use Zoop\GomiModule\DataModel\User;
 use Zend\Http\Headers;
 use Zend\Http\Header\SetCookie;
 use Zend\Math\Rand;
 
 class RememberMeService implements RememberMeInterface
 {
-
     protected $options;
 
     protected $requestHeaders;
@@ -100,15 +100,30 @@ class RememberMeService implements RememberMeInterface
 
         $userRepository = $documentManager->getRepository($this->options->getUserClass());
         $usernameProperty = $this->options->getUsernameProperty();
+        
+        $shardServiceManager = $this->options->getShardServiceManager();
+        $allowOverride = $shardServiceManager->getAllowOverride();
+        $shardServiceManager->setAllowOverride(true);
+
+        $sysUser = new User;
+        $sysUser->addRole('sys::authenticate');
+        $shardServiceManager->setService('user', $sysUser);            
+        
         $user = $userRepository->findOneBy([$usernameProperty => $username]);
+
         if (! $user) {
             //although the cookie and rememberme record match, there is no matching registered user!
             $this->removeCookie();
             $this->removeUserRecords();
 
+            $sysUser->removeRole('sys::authenticate');
+            $shardServiceManager->setAllowOverride($allowOverride);
             return false;
         }
 
+        $shardServiceManager->setService('user', $user);
+        $shardServiceManager->setAllowOverride($allowOverride);
+        
         return $user;
     }
 

@@ -26,10 +26,6 @@
         {
             "type": "vcs",
             "url": "https://github.com/zoopcommerce/mongodb-odm"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/crimsonronin/gomi-module"
         }
     ],
     "require": {
@@ -39,7 +35,7 @@
         "doctrine/doctrine-mongo-odm-module"        : "1.0.x-dev",
         "doctrine/doctrine-module"                  : "1.0.x-dev as 1.0",
         "doctrine/mongodb-odm"                      : "dev-hotfix719 as 1.0.0-BETA9",
-        "zoopcommerce/gomi-module"                  : "~2.0"
+        "zoopcommerce/gomi-module"                  : "~2.1"
     },
     "require-dev": {
         "phpunit/phpunit"           : ">=3.7",

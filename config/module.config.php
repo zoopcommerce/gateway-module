@@ -27,7 +27,7 @@ return [
                 'enable_remember_me'    => false,
 
                 'per_request_adapter' => 'Zoop\GatewayModule\HttpAdapter',
-                'per_session_adapter' => 'doctrine.authentication.adapter.default',
+                'per_session_adapter' => 'Zoop\GatewayModule\SysAuthenticateAdapter',
                 'per_session_storage' => 'doctrine.authentication.storage.default',
                 'remember_me_service' => 'Zoop\GatewayModule\RememberMeService',
             ],
@@ -106,7 +106,8 @@ return [
         'factories' => [
             'Zend\Authentication\AuthenticationService' => 'Zoop\GatewayModule\Service\AuthenticationServiceFactory',
             'Zoop\GatewayModule\HttpAdapter' => 'Zoop\GatewayModule\Service\HttpAdapterServiceFactory',
-            'Zoop\GatewayModule\RememberMeService' => 'Zoop\GatewayModule\Service\RememberMeServiceFactory'
+            'Zoop\GatewayModule\RememberMeService' => 'Zoop\GatewayModule\Service\RememberMeServiceFactory',
+            'Zoop\GatewayModule\SysAuthenticateAdapter' => 'Zoop\GatewayModule\Service\SysAuthenticateAdapterFactory'
         ],
         'delegators' => [
             'doctrine.authentication.adapter.default' => [
