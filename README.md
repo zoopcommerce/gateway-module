@@ -1,7 +1,7 @@
 Zoop gateway-module
 ===================
 
-[![Build Status](https://api.shippable.com/projects/53f6a501ec4936790331305e/badge/master)](https://www.shippable.com/projects/53f6a501ec4936790331305e)
+[![Build Status](https://api.shippable.com/projects/540e7ac73479c5ea8f9eba01/badge?branchName=master)](https://app.shippable.com/projects/540e7ac73479c5ea8f9eba01/builds/latest)
 
 Zend Framework 2 module that extends zoop's Shard Module with authentication services. Provides:
 
